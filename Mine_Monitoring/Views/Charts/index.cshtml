@@ -18,13 +18,17 @@
             flex-wrap: wrap;
         }
 
-        .chart {
-            flex: 1;
-            margin-right: 20px;
+        .chart-box {
+            border: 1px solid #ddd;
             margin-bottom: 20px;
-            width: 400px; /* Fixed width for each chart container */
-            height: 300px; /* Fixed height for each chart container */
-            position: relative; /* Ensure tooltips position correctly */
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+        .chart {
+            width: 100%; /* Make the chart fill the container */
+            height: 300px; /* Fixed height for each chart */
         }
 
         .pie-tooltip {
@@ -39,23 +43,37 @@
     </style>
 </head>
 <body>
-    <div class="chart-container" style="position: relative;">
-        <div class="chart">
-            <canvas id="barChart"></canvas>
-        </div>
-        <div class="chart">
-            <canvas id="pieChart"></canvas>
-            <div id="pieTooltip" class="pie-tooltip"></div>
-        </div>
-        <div class="chart">
-            <canvas id="lineChart"></canvas>
-        </div>
-        <div class="chart">
-            <canvas id="ganttChart"></canvas>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="chart-box">
+                    <canvas id="barChart" class="chart"></canvas>
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="chart-box">
+                    <canvas id="pieChart" class="chart"></canvas>
+                    <div id="pieTooltip" class="pie-tooltip"></div>
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="chart-box">
+                    <canvas id="lineChart" class="chart"></canvas>
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="chart-box">
+                    <canvas id="ganttChart" class="chart"></canvas>
+                </div>
+            </div>
         </div>
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         var ctxBar = document.getElementById('barChart').getContext('2d');
         var barChart = new Chart(ctxBar, {

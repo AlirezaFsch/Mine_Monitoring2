@@ -1,84 +1,128 @@
 ﻿@{
     ViewData["Title"] = "ورود";
+    Layout = null; // Assuming you do not want to use the default layout
 }
 
-<style>
-    body {
-        font-family: 'B Nazanin', serif; /* Use B Nazanin font if available */
-        background-image: url("/images/backgroundimage.jpg"); /* Adjust the path to your background image */
-        background-size: cover;
-        background-position: center;
-        margin: 0; /* Remove default margin */
-        padding: 0; /* Remove default padding */
-    }
-
-    form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-        background-color: #fff;
-        margin: 0 auto;
-        max-width: 350px;
-    }
-
-    h2 {
-        text-align: center;
-    }
-
-    label {
-        font-size: 16px;
-        margin-bottom: 5px;
-        display: flex;
-        align-items: center;
-    }
-
-        label img {
-            margin-right: 5px;
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'B Nazanin', serif;
+            background-image: url("/images/backgroundimage.jpg");
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
         }
 
-    input {
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        font-size: 16px;
-        width: 100%;
-        margin-bottom: 15px;
-    }
-
-    button {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        background-color: #3498db; /* Classic blue */
-        color: #fff;
-        font-size: 16px;
-        cursor: pointer;
-    }
-
-        button:hover {
-            background-color: #2980b9; /* Slightly darker blue on hover */
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(145deg, #ffffff, #e6e6e6);
+            margin: 0 auto;
+            max-width: 400px;
+            border: 1px solid #ddd;
         }
-</style>
 
-<h2>ورود</h2>
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
 
-<form method="post" action="/Login/Authenticate">
-    <div>
-        <label for="username">
-            <img src="/path/to/username_icon.png" alt="Username icon">:نام کاربری
-        </label>
-        <input type="text" id="username" name="username" required>
+        .form-group {
+            width: 100%;
+        }
+
+        .form-control {
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+            .form-control:focus {
+                border-color: #3498db;
+                box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+                outline: none;
+            }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 25px;
+            background-color: #3498db;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+            .btn:hover {
+                background-color: #2980b9;
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+            }
+
+            .btn:active {
+                background-color: #1c598a;
+                box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+    </style>
+    <link href="~/bootstrapicon/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/bootstrapicon/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/bootstrapicon/css/bootstrap.rtl.css" rel="stylesheet" />
+    <link href="~/bootstrapicon/css/bootstrap.rtl.min.css" rel="stylesheet" />
+    <link href="~/bootstrapicon/css/bootstrap-utilities.css" rel="stylesheet" />
+    <link href="~/bootstrapicon/css/bootstrap-utilities.min.css" rel="stylesheet" />
+    <link href="~/bootstrapicon/css/bootstrap-utilities.rtl.css" rel="stylesheet" />
+    <link href="~/bootstrapicon/css/bootstrap-utilities.rtl.min.css" rel="stylesheet" />
+    <link href="~/bootstrapicon/css/bootstrap-grid.css" rel="stylesheet" />
+    <link href="~/bootstrapicon/css/bootstrap-grid.min.css" rel="stylesheet" />
+    <link href="~/bootstrapicon/css/bootstrap-grid.rtl.css" rel="stylesheet" />
+    <link href="~/bootstrapicon/css/bootstrap-grid.rtl.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="login-form">
+        <h2>ورود</h2>
+        <form method="post" action="/Login/Authenticate">
+            <div class="form-group">
+                <i class="bi bi-person"></i>
+                <label for="username">
+                    :نام کاربری
+                </label>
+                <input type="text" id="username" name="username" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <i class="bi bi-key"></i>
+                <label for="password">
+                    :رمز عبور
+                </label>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">ورود</button>
+        </form>
     </div>
-    <div>
-        <label for="password">
-            <img src="/path/to/password_icon.png" alt="Password icon">:رمز عبور
-        </label>
-        <input type="password" id="password" name="password" required>
-    </div>
-    <button type="submit">ورود</button>
-</form>
+    <script src="~/js/2.js"></script>
+    <script src="~/js/slim.js"></script>
+    <script src="~/bootstrapicon/js/bootstrap.bundle.js"></script>
+    <script src="~/bootstrapicon/js/bootstrap.bundle.min.js"></script>
+    <script src="~/bootstrapicon/js/bootstrap.esm.js"></script>
+    <script src="~/bootstrapicon/js/bootstrap.esm.min.js"></script>
+    <script src="~/bootstrapicon/js/bootstrap.js"></script>
+    <script src="~/bootstrapicon/js/bootstrap.min.js"></script>
+</body>
+</html>
