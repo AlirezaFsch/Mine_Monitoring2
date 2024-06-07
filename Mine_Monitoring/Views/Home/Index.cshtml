@@ -1,24 +1,37 @@
-﻿<!DOCTYPE html>
+﻿@model HomeViewModel
+@using Mine_Monitoring.Models
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صفحه اصلی</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>صنعت معدن ایران</title>
+    <link href="~/css/boot.css" rel="stylesheet" />
     <style>
         body {
-            padding: 20px;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .container {
+            margin-top: 10px;
         }
 
         h1 {
             text-align: center;
+            font-size: 2rem; /* Adjust font size */
+            margin-bottom: 10px; /* Adjust margin to move the title up */
         }
 
         .announcement-board {
             border: 1px solid #ccc;
             padding: 20px;
-            margin: 20px auto;
-            max-width: 600px;
+            max-width: 100%;
             clear: both;
             text-align: center;
         }
@@ -38,21 +51,13 @@
             background-color: #f2f2f2;
         }
 
-        .chart-container {
-            width: calc(33.33% - 20px);
-            margin-right: 10px;
+        .chart-box {
+            margin-bottom: 20px;
+            background-color: white;
+            border: 1px solid #ccc; /* Add border similar to announcement board */
             padding: 20px;
             box-sizing: border-box;
-            background-color: white;
-            border: 1px solid #ccc; /* Gray border */
-            float: right;
-            clear: right;
-            margin-bottom: 20px; /* Add margin between charts */
         }
-
-            .chart-container:last-child {
-                margin-right: 0;
-            }
 
         canvas {
             width: 100%;
@@ -61,40 +66,62 @@
     </style>
 </head>
 <body>
-    <h1>صنعت معدن ایران</h1>
-    <div class="announcement-board">
-        <h2>تابلو اعلانات</h2>
-        <table>
-            <tr>
-                <th>فعالیت</th>
-                <th>تاریخ</th>
-            </tr>
-            <tr>
-                <td>فعالیت ۱</td>
-                <td>۱۰ فروردین ۱۴۰۳</td>
-            </tr>
-            <tr>
-                <td>فعالیت ۲</td>
-                <td>۱۵ فروردین ۱۴۰۳</td>
-            </tr>
-            <tr>
-                <td>فعالیت ۳</td>
-                <td>۲۰ فروردین ۱۴۰۳</td>
-            </tr>
-        </table>
+    <div class="container">
+        <h1 class="text-center">صنعت معدن ایران</h1>
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="chart-box">
+                    <canvas id="miningIndustryChart" class="chart"></canvas>
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="chart-box">
+                    <canvas id="gdpVsMiningChart" class="chart"></canvas>
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="chart-box">
+                    <canvas id="comparisonWithOtherCountriesChart" class="chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="announcement-board">
+                    <h2>تابلو اعلانات</h2>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>فعالیت</th>
+                                <th>تاریخ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>فعالیت ۱</td>
+                                <td>۱۰ فروردین ۱۴۰۳</td>
+                            </tr>
+                            <tr>
+                                <td>فعالیت ۲</td>
+                                <td>۱۵ فروردین ۱۴۰۳</td>
+                            </tr>
+                            <tr>
+                                <td>فعالیت ۳</td>
+                                <td>۲۰ فروردین ۱۴۰۳</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="chart-container">
-        <canvas id="miningIndustryChart"></canvas>
-    </div>
-
-    <div class="chart-container">
-        <canvas id="gdpVsMiningChart"></canvas>
-    </div>
-
-    <div class="chart-container">
-        <canvas id="comparisonWithOtherCountriesChart"></canvas>
-    </div>
+    <script src="~/js/slim.js"></script>
+    <script src="~/js/slimmin.js"></script>
+    <script src="~/js/propermin.js"></script>
+    <script src="~/js/bootstrapmin.js"></script>
+    <script src="~/js/chartss.js"></script>
+</body>
+</html>
     <script>
         var ctxMiningIndustry = document.getElementById('miningIndustryChart').getContext('2d');
         var miningIndustryChart = new Chart(ctxMiningIndustry, {
@@ -183,5 +210,3 @@
             }
         });
     </script>
-</body>
-</html>

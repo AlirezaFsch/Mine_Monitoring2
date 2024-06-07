@@ -1,0 +1,33 @@
+﻿@model Mine_Monitoring.Models.HseCourse
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Add New Course";
+}
+
+<h2>افزودن دوره جدید</h2>
+
+<form asp-action="AddCourse" method="post">
+    <div class="form-group">
+        <label for="CourseName">نام دوره</label>
+        <input type="text" class="form-control" id="CourseName" name="CourseName" required />
+    </div>
+    <div class="form-group">
+        <label for="Instructor">مدرس</label>
+        <input type="text" class="form-control" id="Instructor" name="Instructor" required />
+    </div>
+    <div class="form-group">
+        <label for="StartDate">تاریخ شروع</label>
+        <input type="date" class="form-control" id="StartDate" name="StartDate" required />
+    </div>
+    <div class="form-group">
+        <label for="EndDate">تاریخ پایان</label>
+        <input type="date" class="form-control" id="EndDate" name="EndDate" required />
+    </div>
+    <div class="form-group">
+        <label for="Location">مکان</label>
+        <input type="text" class="form-control" id="Location" name="Location" required />
+    </div>
+    <button type="submit" class="btn btn-primary">افزودن</button>
+    <a href="@Url.Action("Index")" class="btn btn-secondary">بازگشت</a>
+</form>

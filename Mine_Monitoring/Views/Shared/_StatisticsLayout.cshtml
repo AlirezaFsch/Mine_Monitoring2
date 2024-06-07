@@ -1,0 +1,102 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - آمار صنعت معدن ایران</title>
+    <script src="~/js/bootstrapmin.js"></script>
+    <link href="~/css/bootstrapmin.css" rel="stylesheet" />
+    <style>
+        body {
+            direction: rtl;
+            text-align: right;
+            margin-top: 60px; /* Adjust the margin to accommodate the fixed header */
+        }
+
+        .header-container {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000; /* Ensure the header appears above other content */
+        }
+
+        .container {
+            margin-top: 100px; /* Adjust the margin to prevent content from being hidden behind the header */
+        }
+
+
+        .navbar {
+            background-color: #f8f9fa; /* Set your desired background color */
+        }
+
+        .navbar-nav {
+            margin-left: auto;
+        }
+
+            .navbar-nav .nav-item {
+                margin-right: 200px; /* Adjust as needed */
+            }
+
+            .navbar-nav .nav-link {
+                padding: 10px 20px;
+                border-radius: 5px;
+                transition: background-color 0.3s;
+            }
+
+                .navbar-nav .nav-link:hover {
+                    background-color: lightblue;
+                }
+
+        .chart-container {
+            width: 100%;
+            padding: 100px;
+            box-sizing: border-box;
+            background-color: white;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+    <header>
+            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #f8f9fa;">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="true" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Statistics" style="background-color: @ViewBag.Page1Active ? 'lightblue' : 'inherit'">صفحه اصلی </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Statistics/Page1" style="background-color: @ViewBag.Page2Active ? 'lightblue' : 'inherit'">آمار سالیانه</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Statistics/Page3" style="background-color: @ViewBag.Page3Active ? 'lightblue' : 'inherit'">آمار تولید </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Statistics/Page4" style="background-color: @ViewBag.Page4Active ? 'lightblue' : 'inherit'">آمار صادرات</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Statistics/Page5" style="background-color: @ViewBag.Page5Active ? 'lightblue' : 'inherit'">آمار واردات</a>
+                    </li>
+                    <!-- Add other pages as needed -->
+                </ul>
+            </div>
+        </nav>
+
+    </header>
+    </div>
+    <div class="main-content">
+        @RenderBody()
+    </div>
+    <script src="~/js/propermin.js"></script>
+    <script src="~/js/bootstrapmin.js"></script>
+    <script src="~/js/slimmin.js"></script>
+</body>
+</html>

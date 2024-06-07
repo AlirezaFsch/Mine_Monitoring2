@@ -1,0 +1,124 @@
+﻿@model List<Mine_Monitoring.Models.HseCourse>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دوره‌های HSE</title>
+    <link href="~/css/bootstrapmin.css" rel="stylesheet" />
+    <style>
+        body {
+            direction: rtl;
+            text-align: right;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        .table {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>دوره‌های HSE</h1>
+        <div class="mb-3">
+            <button onclick="window.location.href='@Url.Action("Index", "Home")'" class="btn btn-secondary">بازگشت</button>
+            <button onclick="window.location.href='@Url.Action("AddCourse", "Hse")'" class="btn btn-primary">اضافه کردن دوره جدید</button>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <input type="text" id="courseNameFilter" class="form-control" placeholder="نام دوره">
+            </div>
+            <div class="col-md-3">
+                <input type="text" id="instructorFilter" class="form-control" placeholder="مدرس">
+            </div>
+            <div class="col-md-3">
+                <input type="date" id="startDateFilter" class="form-control" placeholder="تاریخ شروع">
+            </div>
+            <div class="col-md-3">
+                <input type="date" id="endDateFilter" class="form-control" placeholder="تاریخ پایان">
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>نام دوره</th>
+                    <th>مدرس</th>
+                    <th>تاریخ شروع</th>
+                    <th>تاریخ پایان</th>
+                    <th>مکان</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var course in Model)
+                {
+                    <tr>
+                        <td>@course.CourseName</td>
+                        <td>@course.Instructor</td>
+                        <td>@course.StartDate.ToShortDateString()</td>
+                        <td>@course.EndDate.ToShortDateString()</td>
+                        <td>@course.Location</td>
+                        <td>
+                            <button onclick="window.location.href='@Url.Action("Details", "Hse", new { id = course.Id })'" class="btn btn-info btn-sm">جزئیات</button>
+                            <button onclick="window.location.href='@Url.Action("Participate", "Hse", new { id = course.Id })'" class="btn btn-success btn-sm">شرکت کردن</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <script src="~/js/slimmin.js"></script>
+    <script src="~/js/propermin.js"></script>
+    <script src="~/js/bootstrapmin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const courseNameFilter = document.getElementById('courseNameFilter');
+            const instructorFilter = document.getElementById('instructorFilter');
+            const startDateFilter = document.getElementById('startDateFilter');
+            const endDateFilter = document.getElementById('endDateFilter');
+
+            courseNameFilter.addEventListener('input', filterTable);
+            instructorFilter.addEventListener('input', filterTable);
+            startDateFilter.addEventListener('change', filterTable);
+            endDateFilter.addEventListener('change', filterTable);
+
+            function filterTable() {
+                const courseName = courseNameFilter.value.toLowerCase();
+                const instructor = instructorFilter.value.toLowerCase();
+                const startDate = startDateFilter.value;
+                const endDate = endDateFilter.value;
+
+                const rows = document.querySelectorAll('tbody tr');
+                rows.forEach(row => {
+                    const courseNameCell = row.cells[0].textContent.toLowerCase();
+                    const instructorCell = row.cells[1].textContent.toLowerCase();
+                    const startDateCell = row.cells[2].textContent;
+                    const endDateCell = row.cells[3].textContent;
+
+                    const matchesCourseName = courseName === '' || courseNameCell.includes(courseName);
+                    const matchesInstructor = instructor === '' || instructorCell.includes(instructor);
+                    const matchesStartDate = startDate === '' || startDateCell >= startDate;
+                    const matchesEndDate = endDate === '' || endDateCell <= endDate;
+
+                    if (matchesCourseName && matchesInstructor && matchesStartDate && matchesEndDate) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
