@@ -10,16 +10,44 @@
     <meta charset="utf-8">
     <title>اطلاعات بورس ایران</title>
     <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
+        .container {
+            display: flex;
+            flex-direction: column; /* Arrange items in a column */
+            justify-content: flex-start; /* Align items to the start (top) */
+            align-items: center; /* Center items horizontally */
             margin-top: 20px;
+            padding: 10px; /* Padding around the container */
+            border: 1px solid #ccc; /* Border around the container */
         }
 
-        th, td {
-            padding: 10px;
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Center items horizontally */
+            align-items: flex-start; /* Align items to the top */
+        }
+
+        .item {
+            width: 140px; /* Adjust size as needed */
+            height: 140px; /* Adjust size as needed */
+            margin: -1px; /* Remove margin to eliminate spacing between items */
             text-align: center;
-            border: 1px solid #ddd;
+        }
+
+        .square {
+            position: relative;
+            width: 100%; /* Take full width of .item */
+            height: 100%; /* Take full height of .item */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #ccc; /* Border around each square */
         }
 
         .positive {
@@ -37,41 +65,36 @@
             color: white;
         }
 
-        .square {
-            width: 20px;
-            height: 20px;
-            display: inline-block;
-            margin-right: 5px;
+        .stock-name, .stock-value {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+        }
+
+        .stock-name {
+            top: 5px;
+            font-weight: bold;
+        }
+
+        .stock-value {
+            bottom: 5px;
         }
     </style>
 </head>
 <body>
-    <h1>اطلاعات بورس ایران</h1>
-    <table>
-        <tr>
-            <th>نام سهام</th>
-            <th>مقدار</th>
-        </tr>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.StockName</td>
-                <td>
-                    @if (item.ChangeClass == "positive")
-                    {
-                        <div class="square positive"></div> @item.Value
-                    }
-                    else if (item.ChangeClass == "negative")
-                    {
-                        <div class="square negative"></div> @item.Value
-                    }
-                    else
-                    {
-                        <div class="square zero"></div> @item.Value
-                    }
-                </td>
-            </tr>
-        }
-    </table>
+    <div class="container">
+        <div class="title">اطلاعات بورس ایران</div>
+        <div class="items">
+            @foreach (var item in Model)
+            {
+                <div class="item">
+                    <div class="square @item.ChangeClass">
+                        <div class="stock-name">@item.StockName</div>
+                        <div class="stock-value">@item.Value</div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 </body>
 </html>

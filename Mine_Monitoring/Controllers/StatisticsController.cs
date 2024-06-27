@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace YourNamespace.Controllers
+namespace Mine_Monitoring.Controllers
 {
     public class StatisticsController : Controller
     {

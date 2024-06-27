@@ -1,0 +1,30 @@
+﻿@model List<Mine_Monitoring.Models.SMSMessage>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Sent SMS Messages</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>User Name</th>
+            <th>SMS Type</th>
+            <th>Message</th>
+            <th>Sent Date Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var message in Model)
+        {
+            <tr>
+                <td>@message.Id</td>
+                <td>@message.User.Name</td>
+                <td>@message.SMSType.TypeName</td>
+                <td>@message.Message</td>
+                <td>@message.SentDateTime</td>
+            </tr>
+        }
+    </tbody>
+</table>
