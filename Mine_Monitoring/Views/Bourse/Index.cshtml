@@ -1,0 +1,77 @@
+﻿@model List<Mine_Monitoring.Models.BourseModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="utf-8">
+    <title>اطلاعات بورس ایران</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .positive {
+            background-color: green;
+            color: white;
+        }
+
+        .negative {
+            background-color: red;
+            color: white;
+        }
+
+        .zero {
+            background-color: gray;
+            color: white;
+        }
+
+        .square {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>اطلاعات بورس ایران</h1>
+    <table>
+        <tr>
+            <th>نام سهام</th>
+            <th>مقدار</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.StockName</td>
+                <td>
+                    @if (item.ChangeClass == "positive")
+                    {
+                        <div class="square positive"></div> @item.Value
+                    }
+                    else if (item.ChangeClass == "negative")
+                    {
+                        <div class="square negative"></div> @item.Value
+                    }
+                    else
+                    {
+                        <div class="square zero"></div> @item.Value
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+</body>
+</html>
