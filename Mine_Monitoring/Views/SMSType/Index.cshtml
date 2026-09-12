@@ -1,0 +1,25 @@
+﻿@model List<Mine_Monitoring.Models.SMSType>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>SMS Types</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Type Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var smsType in Model)
+        {
+            <tr>
+                <td>@smsType.Id</td>
+                <td>@smsType.TypeName</td>
+            </tr>
+        }
+    </tbody>
+</table>

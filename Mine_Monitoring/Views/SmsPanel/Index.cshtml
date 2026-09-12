@@ -1,0 +1,48 @@
+﻿@model List<Mine_Monitoring.Models.Users>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center mb-4">کاربران</h1>
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <button onclick="location.href='@Url.Action("Index", "SMSType")'" class="btn btn-primary btn-lg mx-2">انواع پیامک</button>
+            <button onclick="location.href='@Url.Action("Index", "SMSMessage")'" class="btn btn-primary btn-lg mx-2">پیامک‌های ارسال شده</button>
+            <button onclick="location.href='@Url.Action("Send", "SMSMessage")'" class="btn btn-primary btn-lg mx-2">ارسال پیامک جدید</button>
+        </div>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">شناسه</th>
+                            <th scope="col">نام</th>
+                            <th scope="col">شماره تلفن</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var user in Model)
+                        {
+                            <tr>
+                                <td>@user.Id</td>
+                                <td>@user.Name</td>
+                                <td>@user.PhoneNumber</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p class="text-center">کاربری یافت نشد.</p>
+    }
+</div>

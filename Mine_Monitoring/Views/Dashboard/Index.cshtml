@@ -1,0 +1,134 @@
+﻿@{
+    ViewData["Title"] = "داشبورد";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">دستورهای کار نگهداری</h2>
+
+    <div class="row mb-4">
+        <div class="col">
+            <h4>مقایسه:</h4>
+            <select id="comparisonSelect" class="form-control">
+                <option>YTD vs Last YTD</option>
+                <option>MTD vs Last MTD</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5>درصد تأخیر شروع</h5>
+                    <h3 id="delayedStart">%</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5>درصد تأخیر پایان</h5>
+                    <h3 id="delayedFinish">%</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5>ساعات کار</h5>
+                    <h3 id="manHours"></h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5>مقایسه ساعات کار</h5>
+                    <h3 id="manHoursComparison">%</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <canvas id="monthlyChart"></canvas>
+        </div>
+        <div class="col-md-6">
+            <canvas id="workOrderChart"></canvas>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch('/Dashboard/GetRandomData')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // Log data to console for debugging
+
+                    // Safeguard against undefined values
+                    const delayedStart = data.DelayedStart ?? 0;
+                    const delayedFinish = data.DelayedFinish ?? 0;
+                    const manHours = data.ManHours ?? 0;
+                    const manHoursComparison = data.ManHoursComparison ?? 0;
+                    const monthlyData = data.MonthlyData ?? [];
+                    const workOrderComparison = data.WorkOrderComparison ?? 0;
+
+                    document.getElementById('delayedStart').innerText = delayedStart.toFixed(2) + '%';
+                    document.getElementById('delayedFinish').innerText = delayedFinish.toFixed(2) + '%';
+                    document.getElementById('manHours').innerText = manHours;
+                    document.getElementById('manHoursComparison').innerText = manHoursComparison.toFixed(2) + '%';
+
+                    var monthlyChartCtx = document.getElementById('monthlyChart').getContext('2d');
+                    new Chart(monthlyChartCtx, {
+                        type: 'line',
+                        data: {
+                            labels: ['ژانویه', 'فوریه', 'مارس', 'آوریل', 'مه', 'ژوئن', 'ژوئیه', 'اوت', 'سپتامبر', 'اکتبر', 'نوامبر', 'دسامبر'],
+                            datasets: [{
+                                label: 'ساعات کار ماهانه',
+                                data: monthlyData,
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+
+                    var workOrderChartCtx = document.getElementById('workOrderChart').getContext('2d');
+                    new Chart(workOrderChartCtx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['YTD vs Last YTD'],
+                            datasets: [{
+                                label: 'مقایسه دستورهای کار',
+                                data: [workOrderComparison],
+                                backgroundColor: 'rgba(153, 102, 255, 1)',
+                                borderColor: 'rgba(153, 102, 255, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        });
+    </script>
+}
+
